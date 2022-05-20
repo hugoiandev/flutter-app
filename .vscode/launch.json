@@ -10,7 +10,8 @@
       "request": "launch",
       "type": "dart",
       "args": [
-        "--dart-define=API_WEATHER_KEY=c3083241c1c8d585022a63795c5c94fa"
+        "--dart-define=API_WEATHER_KEY=c3083241c1c8d585022a63795c5c94fa",
+        "--dart-define=API_MOVIE_KEY=2e5ac3be74da964097e0b4ade1ad0219"
       ]
     },
     {

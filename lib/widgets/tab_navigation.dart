@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:multi_info_app/controllers/weather_controller.dart';
 import 'package:multi_info_app/pages/crypto_page.dart';
 import 'package:multi_info_app/pages/home_page.dart';
 import 'package:multi_info_app/pages/movie_page.dart';
+import 'package:provider/provider.dart';
 
 class TabNavigationState extends State<TabNavigation> {
   int _currentTabIndex = 0;
 
-  List<Widget> tabPages = const [
-    HomePage(),
-    MoviePage(),
-    CryptoPage(),
+  List<Widget> tabPages = [
+    ChangeNotifierProvider(
+      create: (_) => WeatherController(),
+      child: const HomePage(),
+    ),
+    const MoviePage(),
+    const CryptoPage(),
   ];
 
   void _changeIndex(index) {
@@ -21,6 +26,7 @@ class TabNavigationState extends State<TabNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: tabPages.elementAt(_currentTabIndex),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
