@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:multi_info_app/controllers/location.dart';
 import 'package:multi_info_app/controllers/weather_controller.dart';
 import 'package:multi_info_app/pages/crypto_page.dart';
 import 'package:multi_info_app/pages/home_page.dart';
@@ -9,8 +10,19 @@ class TabNavigationState extends State<TabNavigation> {
   int _currentTabIndex = 0;
 
   List<Widget> tabPages = [
-    ChangeNotifierProvider(
-      create: (_) => WeatherController(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) {
+          final weather = WeatherController();
+          weather.getWeather();
+          return weather;
+        }),
+        ChangeNotifierProvider(create: (_) {
+          final location = LocationController();
+          location.checkLocation();
+          return location;
+        }),
+      ],
       child: const HomePage(),
     ),
     const MoviePage(),

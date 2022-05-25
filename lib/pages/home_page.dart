@@ -1,24 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:multi_info_app/controllers/location.dart';
 import 'package:multi_info_app/controllers/weather_controller.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
-
-  @override
-  HomePageState createState() {
-    return HomePageState();
-  }
-}
-
-class HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    super.initState();
-    WeatherController controller =
-        Provider.of<WeatherController>(context, listen: false);
-    controller.getWeather();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +14,7 @@ class HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Clima'),
       ),
-      body: Consumer<WeatherController>(builder: (context, value, child) {
+      body: Consumer<WeatherController>(builder: (context, weather, child) {
         return Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -74,19 +60,19 @@ class HomePageState extends State<HomePage> {
                 )
               ]),
               const SizedBox(height: 30.0),
-              value.isLoading
+              weather.isLoading
                   ? const CircularProgressIndicator()
                   : Column(
                       children: [
                         Text(
-                          '${value.weatherData?.main.temp.toInt()}ºC',
+                          '${weather.weatherData?.main.temp.toInt()}ºC',
                           style: const TextStyle(
                             fontSize: 50.0,
                             color: Colors.white,
                           ),
                         ),
                         Text(
-                          '${value.weatherData?.name}',
+                          '${weather.weatherData?.name}',
                           style: const TextStyle(
                               fontSize: 40.0, color: Colors.white),
                         )
@@ -112,7 +98,7 @@ class HomePageState extends State<HomePage> {
                                 ),
                                 color: Colors.blueGrey,
                               ),
-                              child: value.isLoading
+                              child: weather.isLoading
                                   ? Column(
                                       children: [
                                         Container(
@@ -128,15 +114,15 @@ class HomePageState extends State<HomePage> {
                                       children: [
                                         Image(
                                           image: NetworkImage(
-                                              'http://openweathermap.org/img/wn/${value.weatherData?.weather[0].icon}@4x.png'),
+                                              'http://openweathermap.org/img/wn/${weather.weatherData?.weather[0].icon}@4x.png'),
                                         ),
                                         Text(
-                                          '${value.weatherData?.weather[0].description.toUpperCase()}',
+                                          '${weather.weatherData?.weather[0].description.toUpperCase()}',
                                           style: const TextStyle(
                                             fontSize: 30.0,
                                             color: Colors.white,
                                           ),
-                                        )
+                                        ),
                                       ],
                                     ),
                             ),
